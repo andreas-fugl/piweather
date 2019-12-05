@@ -1,4 +1,28 @@
 #:kivy 1.0
-
-Button:
-    text: 'Hello from test.kv'
+BoxLayout:
+    orientation: 'horizontal'
+    BoxLayout:
+        orientation: 'vertical'
+        Button:
+            text: 'l.1'
+        Button:
+            text: 'l.2'
+    BoxLayout:
+        orientation: 'vertical'
+        BoxLayout:
+            orientation: 'vertical'
+            Button:
+                text: 'm.1'
+            BoxLayout:
+                orientation: 'horizontal'
+                Button:
+                    text: 'm.2'
+                Button:
+                    text: 'm.2'
+    BoxLayout:
+        orientation: 'vertical'
+        Button:
+            text: 'r.1'
+        Button:
+            text: 'r.2'
+        
