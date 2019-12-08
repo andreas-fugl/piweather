@@ -1,29 +1,36 @@
 #:kivy 1.0
 BoxLayout:
     orientation: 'horizontal'
+    id: rootBox
     BoxLayout:
         orientation: 'vertical'
         size_hint: (0.1, 1)
+        name: 'leftBox'
         Button:
             text: 'l.1'
         Button:
             text: 'l.2'
     BoxLayout:
         orientation: 'vertical'
+        name: 'middleBox'
         BoxLayout:
             orientation: 'vertical'
             Button:
                 text: 'm.1'
+                name: 'm1button'
                 on_press: app.say_hello()
             BoxLayout:
                 orientation: 'horizontal'
                 size_hint: (1, 0.15)
                 Button:
-                    text: 'm.2'
+                    text: 'm2leftbutton'
+                    name: 'm2leftbutton'
                 Button:
-                    text: 'm.2'
+                    text: 'm2rightbutton'
+                    name: 'm2rightbutton'
     BoxLayout:
         orientation: 'vertical'
+        name: 'rightBox'
         size_hint: (0.1, 1)
         Button:
             text: 'r.1'
