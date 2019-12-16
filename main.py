@@ -5,6 +5,7 @@ import kivy
 from kivy.app import App
 from kivy.clock import Clock
 
+import paho.mqtt.client as mqtt
 import paho.mqtt.publish as publish
 
 def visitAllChildren(node):
@@ -26,12 +27,12 @@ def visitAllChildren(node):
         visitAllChildren(child)
 
 class PiWeatherApp(App):
+    mqttc = mqtt.Client(client_id="PiWeatherApp")
+    mqttc.connect("192.168.123.26")
+    mqttc.subscribe("debugData")
+
     def say_hello(self):
         node = visitAllChildren(self.root)
-        print("Callback called")
-        publish.single("piweatherApp", "0", hostname="192.168.123.26")
 
 if __name__ == '__main__':
     PiWeatherApp().run()
-
-
