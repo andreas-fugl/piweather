@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import kivy
 kivy.require('1.1.1')
 
