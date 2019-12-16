@@ -29,6 +29,7 @@ def visitAllChildren(node):
 class PiWeatherApp(App):
     mqttc = mqtt.Client(client_id="PiWeatherApp")
     mqttc.connect("192.168.123.26")
+    mqttc.loop_start()
     mqttc.subscribe("debugData")
 
     def say_hello(self):
