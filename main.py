@@ -23,7 +23,17 @@ def visitAllChildren(node):
         visitAllChildren(child)
 
 
+class PiWeatherNetwork(object):
+    pass
+
+
 class PiWeatherApp(App):
+    network = None
+
+    def __init__(self, network, **kwargs):
+        super().__init__(**kwargs)
+        self.network = network
+
     def on_message_callback(client, userdata, message):
         print("PiWeatherApp::on_message_callback")
 
@@ -49,9 +59,11 @@ class PiWeatherApp(App):
     mqttc.subscribe("debugData")
 
     def say_hello(self):
-        # node = visitAllChildren(self.root)
+        #node = visitAllChildren(self.root)
         print(self.mqttc.is_connected())
 
 
 if __name__ == '__main__':
-    PiWeatherApp().run()
+    network = PiWeatherNetwork()
+    gui = PiWeatherApp(network)
+    gui.run()
