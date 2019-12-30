@@ -3,21 +3,20 @@
 import kivy
 
 from kivy.app import App
-from kivy.clock import Clock
 
 import paho.mqtt.client as mqtt
-import paho.mqtt.publish as publish
+
 
 def visitAllChildren(node):
-    try: 
+    try:
         print(node.name)
         node.text = "*"
-    except: 
+    except:
         pass
 
-    try: 
+    try:
         node.text = "*"
-    except: 
+    except:
         pass
 
     if len(node.children) == 0:
@@ -25,6 +24,7 @@ def visitAllChildren(node):
 
     for child in node.children:
         visitAllChildren(child)
+
 
 class PiWeatherApp(App):
     mqttc = mqtt.Client(client_id="PiWeatherApp")
@@ -34,6 +34,7 @@ class PiWeatherApp(App):
 
     def say_hello(self):
         node = visitAllChildren(self.root)
+
 
 if __name__ == '__main__':
     PiWeatherApp().run()
