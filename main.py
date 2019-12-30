@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 
-import kivy
-
-from kivy.app import App
-
 import paho.mqtt.client as mqtt
+from kivy.app import App
 
 
 def visitAllChildren(node):
