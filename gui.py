@@ -31,7 +31,7 @@ class PiWeatherGUI(App):
     def build(self):
         return self.presentation
 
-    def say_hello(self):
+    def onButton(self, instance):
         # node = visitAllChildren(self.root)
-        print("gui button callback")
-        print(self.network.get_data())
+        # print(str(instance.name))
+        instance.text = str(self.network.get_data())
