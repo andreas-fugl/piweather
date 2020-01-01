@@ -5,14 +5,15 @@ class PiWeatherNetwork(object):
     CLIENT_ID = "PiWeatherApp2"
     BROKER_ADDRESS = "192.168.123.26"
 
-    TOPIC = "debugData"
+    TOPICS = ["debugData", "debugData1"]
 
     def get_data(self):
-        return self.msg_payload
+        return self.msg_map
 
     def __on_message(self, client, userdata, msg):
         print("PiWeatherApp::on_message_callback, message = ", msg.payload)
-        self.msg_payload = msg.payload
+        # self.msg_payload = msg.payload
+        self.msg_map[msg.topic] = msg.payload
 
     def __on_connect(self, client, userdata, flags, rc):
         print("PiWeatherApp::on_connect rc=", str(rc))
@@ -32,8 +33,11 @@ class PiWeatherNetwork(object):
         self.mqttc.on_message = self.__on_message
 
         self.mqttc.connect(self.BROKER_ADDRESS)
-        self.mqttc.subscribe(self.TOPIC)
+
+        for topic in self.TOPICS:
+            self.mqttc.subscribe(topic)
         self.mqttc.loop_start()
 
         # data members
         self.msg_payload = None
+        self.msg_map = {}
