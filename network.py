@@ -5,13 +5,13 @@ class PiWeatherNetwork(object):
     CLIENT_ID = "PiWeatherApp2"
     BROKER_ADDRESS = "192.168.123.26"
 
-    TOPICS = ["debugData", "debugData1"]
+    TOPICS = ["weather/#", "zigbee2mqtt/#"]
 
     def get_data(self):
         return self.msg_map
 
     def __on_message(self, client, userdata, msg):
-        print("PiWeatherApp::on_message_callback, message = ", msg.payload)
+        print("PiWeatherApp::on_message_callback, topic = ", msg.topic)
         # self.msg_payload = msg.payload
         self.msg_map[msg.topic] = msg.payload
 
@@ -32,8 +32,8 @@ class PiWeatherNetwork(object):
         self.mqttc.on_disconnect = self.__on_disconnect
         self.mqttc.on_message = self.__on_message
 
+        # connect to the broker and subscribe to topics
         self.mqttc.connect(self.BROKER_ADDRESS)
-
         for topic in self.TOPICS:
             self.mqttc.subscribe(topic)
         self.mqttc.loop_start()
