@@ -1,25 +1,21 @@
 from kivy.app import App
 from kivy.lang import Builder
+from kivy.logger import Logger as log
 
 
-# TODO for reasom not all nodes are traversed
-def find_leaf_nodes(node, dictionary):
+def build_node_dictionary(node, dictionary):
     try:
-        print(node.name)
         dictionary[node.name] = node
-        node.text = "*"
-    except:
-        pass
+    except AttributeError:
+        # TODO: For some reason this error detection actually does not work for buttons!
+        log.warn("gui.py: " + str(node) + " does not have the 'name' attribute. Will not be accessible")
 
     for child in node.children:
-        find_leaf_nodes(child, dictionary)
-
-    if len(node.children) == 0:
-        return node
+        build_node_dictionary(child, dictionary)
 
 
 class PiWeatherGUI(App):
-    leaf_nodes = {}
+    nodes = {}
 
     def __init__(self, network, **kwargs):
         super().__init__(**kwargs)
@@ -29,13 +25,13 @@ class PiWeatherGUI(App):
         return Builder.load_file('piweather.kv')
 
     def on_start(self):
-        # Event handler fired after build()
-        print("on start called")
-
-        find_leaf_nodes(self.root, self.leaf_nodes)
-        print(self.leaf_nodes)
+        """Event handler fired after kivy.App.build()"""
+        build_node_dictionary(self.root, self.nodes)
 
     def onButton(self, instance):
-        # node = visitAllChildren(self.root)
-        # print(str(instance.name))
+        log.debug("onButton: " + str(instance.name))
+
+        for key in self.nodes:
+            self.nodes[key].text = "*"
+
         instance.text = str(self.network.get_data())
