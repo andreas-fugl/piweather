@@ -11,12 +11,10 @@ class PiWeatherNetwork(object):
         return self.msg_map
 
     def __on_message(self, client, userdata, msg):
-        print("PiWeatherApp::on_message_callback, topic = ", msg.topic)
-        # self.msg_payload = msg.payload
         self.msg_map[msg.topic] = msg.payload
 
     def __on_connect(self, client, userdata, flags, rc):
-        print("PiWeatherApp::on_connect rc=", str(rc))
+        pass
 
     def __on_disconnect(self, client, userdata, rc):
         if rc != 0:

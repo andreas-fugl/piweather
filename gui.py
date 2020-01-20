@@ -28,7 +28,8 @@ class PiWeatherGUI(App):
         """Event handler fired after kivy.App.build()"""
         build_node_dictionary(self.root, self.nodes)
 
-    def onButton(self, instance):
+    def on_button_press(self, instance):
+        """Event handler for button press"""
         log.debug("onButton: " + str(instance.name))
 
         for key in self.nodes:
