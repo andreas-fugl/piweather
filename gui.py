@@ -1,9 +1,11 @@
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.logger import Logger as log
+from kivy.clock import Clock
 
 
 def build_node_dictionary(node, dictionary):
+    """Recursively builds a dictionary of names for node and its children"""
     try:
         dictionary[node.name] = node
     except AttributeError:
@@ -24,15 +26,21 @@ class PiWeatherGUI(App):
     def build(self):
         return Builder.load_file('piweather.kv')
 
+    def update_gui_nodes(self):
+        self.nodes["m2leftbutton"].text = str(self.network.get_data())
+
+    def on_timer(self, dt):
+        """Timer handler"""
+        self.update_gui_nodes()
+
     def on_start(self):
         """Event handler fired after kivy.App.build()"""
         build_node_dictionary(self.root, self.nodes)
 
+        self.update_gui_nodes()
+
+        Clock.schedule_interval(self.on_timer, 1.0)
+
     def on_button_press(self, instance):
         """Event handler for button press"""
         log.debug("onButton: " + str(instance.name))
-
-        for key in self.nodes:
-            self.nodes[key].text = "*"
-
-        instance.text = str(self.network.get_data())
