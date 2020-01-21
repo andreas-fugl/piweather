@@ -17,10 +17,9 @@ def build_node_dictionary(node, dictionary):
 
 
 class PiWeatherGUI(App):
-    nodes = {}
-
     def __init__(self, network, **kwargs):
         super().__init__(**kwargs)
+        self.nodes = {}
         self.network = network
 
     def build(self):
