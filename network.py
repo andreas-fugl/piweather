@@ -31,10 +31,18 @@ class PiWeatherNetwork(object):
         self.mqttc.on_message = self.__on_message
 
         # connect to the broker and subscribe to topics
-        self.mqttc.connect(self.BROKER_ADDRESS)
-        for topic in self.TOPICS:
-            self.mqttc.subscribe(topic)
-        self.mqttc.loop_start()
+        for i in range(3):
+            try:
+                print("Connecting to broker at: '" + self.BROKER_ADDRESS + "'")
+                self.mqttc.connect(self.BROKER_ADDRESS)
+
+                for topic in self.TOPICS:
+                    print("Subscribing to " + topic)
+                    self.mqttc.subscribe(topic)
+
+                self.mqttc.loop_start()
+            except:
+                print("Connection failed")
 
         # data members
         self.msg_payload = None
