@@ -3,7 +3,7 @@ from paho.mqtt import client as mqtt
 
 class PiWeatherNetwork(object):
     CLIENT_ID = "PiWeatherApp2"
-    BROKER_ADDRESS = "192.168.123.26"
+    BROKER_ADDRESS = "192.168.123.44"
 
     TOPICS = ["weather/#", "zigbee2mqtt/#"]
 
